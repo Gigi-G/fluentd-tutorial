@@ -1,7 +1,7 @@
 # fluentd-tutorial
 This is a simple tutorial of FluentD.
 
-<a href="#">Tutorial Site</a>
+<a href="https://gigi-g.github.io/fluentd-tutorial/">Tutorial Site</a>
 
 
 
