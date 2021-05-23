@@ -1,0 +1,36 @@
+version: '3.7'
+
+services:
+    fluentd:
+        image: fluent/fluentd:edge-debian
+        container_name: fluentd
+        hostname: fluentd
+        ports: 
+            - "9888:9888"
+        volumes: 
+            - ./conf:/fluentd/etc
+        networks: 
+            tap:
+                ipv4_address: 10.0.100.2
+
+    generator:
+        image: python:3.9.5
+        container_name: generator
+        hostname: generator
+        depends_on: 
+            - fluentd
+        volumes: 
+            - ./generator:/generator
+        command: "bash -c 'pip install fluent-logger && \
+                  python /generator/app.py'"
+        networks: 
+            tap:
+                ipv4_address: 10.0.100.3
+
+networks:
+    tap:
+        name: tap
+        driver: bridge
+        ipam:
+            config:
+                - subnet: 10.0.100.1/24
